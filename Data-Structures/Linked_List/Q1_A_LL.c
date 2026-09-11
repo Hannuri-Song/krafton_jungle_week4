@@ -90,7 +90,25 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	/* add your code here */
+	ListNode *cur; // ptr이라는 포인터 변수 만들기 얘 역할은 ListNode가 있는 곳의 주소를 저장
+	ListNode *temp;
+	cur = malloc(sizeof(ListNode)); //새 데이터를 넣기 위한 실제 ListNode의 공간
+	cur -> item = item; // item 칸에 함수로 받은 매개변수 item을 넣겠다
+
+	if (ll->head == NULL){
+		ll->head = cur;
+		cur->next = NULL;
+		ll->size++;
+		return 0;
+	}
+	
+	if (item < ll->head->item){
+		cur->next = ll->head;
+		ll->head = cur;
+		ll->size++;
+		return 0;
+	}
+	temp = ll->head;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -160,7 +178,8 @@ int insertNode(LinkedList *ll, int index, int value){
 	// If empty list or inserting first node, need to update head pointer
 	if (ll->head == NULL || index == 0){
 		cur = ll->head;
-		ll->head = malloc(sizeof(ListNode));
+		//리스트노드가 하나 들어갈만큼의 메모리를 확보해라
+		ll->head = malloc(sizeof(ListNode)); 
 		ll->head->item = value;
 		ll->head->next = cur;
 		ll->size++;
