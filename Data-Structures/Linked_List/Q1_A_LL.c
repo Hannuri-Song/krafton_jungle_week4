@@ -94,7 +94,7 @@ int insertSortedLL(LinkedList *ll, int item)
 	ListNode *temp;
 	int index = 0;
 
-	//새 노드 생성
+	// 0. 새 노드 생성
 	cur = malloc(sizeof(ListNode)); //새 데이터를 넣기 위한 실제 ListNode의 공간
 	cur -> item = item; // item 칸에 함수로 받은 매개변수 item을 넣겠다
 
@@ -112,6 +112,7 @@ int insertSortedLL(LinkedList *ll, int item)
 		return -1;
 	}
 
+	// 3. 새 값이 첫 노드보다 작으면 맨 앞에 삽입
 	if (item < ll->head->item){
 		cur->next = ll->head;
 		ll->head = cur;
@@ -119,21 +120,22 @@ int insertSortedLL(LinkedList *ll, int item)
 		return 0;
 	}
 
+	// 여기서부턴 리스트 중간에 삽입 될 경우
 	temp = ll->head;
 
-	// 삽입할 위치의 바로 앞까지 이동
+	// 4. 삽입할 위치의 바로 앞까지 이동
 	while (temp->next != NULL && item > temp->next->item){
 		temp = temp->next;
 		index++;
 	}
 
-	// 그 위치에서 중복인지 확인
+	// 5. 그 위치에서 중복인지 확인
 	if (temp->next != NULL && temp->next->item == item){
 		free(cur);
 		return -1;
 	}
 
-	// 중복이 아니면 노드 삽입
+	// 6. 중복이 아니면 노드 삽입
 	cur->next = temp->next;
 	temp->next = cur;
 	ll->size++;
