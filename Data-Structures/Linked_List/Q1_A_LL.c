@@ -71,7 +71,7 @@ int main()
 		case 3:
 			printf("The resulting sorted linked list is: ");
 			printList(&ll);
-			removeAllItems(&ll);
+			//removeAllItems(&ll);
 			break;
 		case 0:
 			removeAllItems(&ll);
@@ -90,11 +90,15 @@ int main()
 
 int insertSortedLL(LinkedList *ll, int item)
 {
-	ListNode *cur; // ptr이라는 포인터 변수 만들기 얘 역할은 ListNode가 있는 곳의 주소를 저장
+	ListNode *cur; // cur이라는 포인터 변수 만들기 얘 역할은 ListNode가 있는 곳의 주소를 저장
 	ListNode *temp;
+	int index = 0;
+
+	//새 노드 생성
 	cur = malloc(sizeof(ListNode)); //새 데이터를 넣기 위한 실제 ListNode의 공간
 	cur -> item = item; // item 칸에 함수로 받은 매개변수 item을 넣겠다
 
+	// 1. 빈 리스트 처리
 	if (ll->head == NULL){
 		ll->head = cur;
 		cur->next = NULL;
@@ -102,13 +106,38 @@ int insertSortedLL(LinkedList *ll, int item)
 		return 0;
 	}
 	
+	// 2. 첫 노드와 중복인지 검사
+	if (ll->head->item == item){
+		free(cur);
+		return -1;
+	}
+
 	if (item < ll->head->item){
 		cur->next = ll->head;
 		ll->head = cur;
 		ll->size++;
 		return 0;
 	}
+
 	temp = ll->head;
+
+	// 삽입할 위치의 바로 앞까지 이동
+	while (temp->next != NULL && item > temp->next->item){
+		temp = temp->next;
+		index++;
+	}
+
+	// 그 위치에서 중복인지 확인
+	if (temp->next != NULL && temp->next->item == item){
+		free(cur);
+		return -1;
+	}
+
+	// 중복이 아니면 노드 삽입
+	cur->next = temp->next;
+	temp->next = cur;
+	ll->size++;
+	return index +1;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////
