@@ -109,7 +109,19 @@ int main()
 
 void recursiveReverse(Queue *q)
 {
-/* add your code here */
+	int value;
+
+	if (isEmptyQueue(q) == 1) {
+		return;
+	}
+
+	value = dequeue(q);
+
+	recursiveReverse(q); // 함수를 호출할 때 컴퓨터가 내부적으로 사용하는 call stack에 저장
+						 // 현재 함수는 자기 차례가 다시 올 때까지 call stack에서 대기
+
+	enqueue(q, value);
+
 }
 
 //////////////////////////////////////////////////////////////////
