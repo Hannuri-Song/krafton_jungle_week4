@@ -110,12 +110,12 @@ int moveMaxToFront(ListNode **ptrHead)
 		cur = cur->next;
 	}
 
-	if (maxprev == NULL){
+	if (maxprev == NULL){ // 이미 최대값이 맨 앞에 있는 경우
 		return 0;
 	}
-	maxprev->next = maxNode->next;
-	maxNode->next = *ptrHead;
-	*ptrHead = maxNode;
+	maxprev->next = maxNode->next; // 최대 노드를 원래 자리에서 뺀다
+	maxNode->next = *ptrHead; // 최대 노드 뒤에 기존 head를 붙인다
+	*ptrHead = maxNode; // 최대 노드를 새로운 head로 만든다
 	
 	return 0;
 }
